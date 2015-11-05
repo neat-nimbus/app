@@ -1,0 +1,22 @@
+<html>
+    <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" href="css/default_register.css" type="text/css" />
+    <title> ポケモン言えるかな?企画webアプリ </title>
+    </head>
+    <body>
+    
+    <h2 class="registration">ポケモン言えるかな?順登録画面</h2><hr />
+                
+        <form action="/song" method="POST">
+        やること:
+        <input type="radio" name="mode" value="hokaku" checked/> 登録
+        <input type="radio" name="mode" value="sakujo" /> 削除
+        <br />
+        ポケモン: <input name="name" type="text" /><br />
+        <input type="hidden" name="team" value="zunou">
+        <button type="submit">Save</button>
+        </form>
+	<input type="button" value="トップページへ" onclick="location.href='/'">
+    </body>
+</html>

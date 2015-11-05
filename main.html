@@ -1,0 +1,81 @@
+<html>
+  <head>
+    <style type="text/css">
+      .table5 {
+      border-collapse: collapse;
+      width: 750px;
+      }
+      .table5 th {
+      background-color: #cccccc;
+      }
+      .table5 td {
+      text-align: center;
+      }
+    </style>
+  
+    <SCRIPT type="text/javascript"><!--
+				       function myEnter(){
+				       myPassWord = prompt("パスワードを入力してください","");
+				       if ( myPassWord != ""  && myPassWord != null ) location.href = 'http://red-octane-111015.appspot.com/'+myPassWord;
+				       }
+				       // -->
+    </SCRIPT>
+  </head>
+  <body>
+    <div>ポケモン言えるかな?</div>
+    <input type="button" value="登録画面へ" onclick="myEnter()">
+    <hr />
+    {% for user in users %}
+    <p>[team get]   {{user.u_date}}  {{ user.u_name }}</p>
+    {% endfor %}
+    <hr />
+    {% for singer in singers %}
+    <p>[team song] {{singer.s_date}}  {{ singer.s_name }}</p>
+    {% endfor %}
+    <!--
+    <table class="table5" border=1>
+      <tr><th>ポケモン(カントー図鑑順)</th><th>team get</th><th>team song</th><th>ポケモン(言えるかな?順)</th><th>team get</th><th>team song</th></tr>
+      <tr><td>フシギダネ</td><td>A-1</td><td>B-1</td><td>ピカチュウ</td><td></td><td></td></tr>
+      <tr><td>フシギソウ</td><td>A-2</td><td>B-2</td><td>カイリュー</td><td></td><td></td></tr>
+      <tr><td>フシギバナ</td><td>A-3</td><td>B-3</td><td>ヤドラン</td><td></td><td></td></tr>
+      <tr><td>ヒトカゲ</td><td>A-1</td><td>B-1</td><td>ピジョン</td><td></td><td></td></tr>
+      <tr><td>リザード</td><td>A-2</td><td>B-2</td><td>コダック</td><td></td><td></td></tr>
+      <tr><td>リザードン</td><td>A-3</td><td>B-3</td><td>コラッタ</td><td></td><td></td></tr>
+      <tr><td>ゼニガメ</td><td>A-1</td><td>B-1</td><td>ズバット</td><td></td><td></td></tr>
+      <tr><td>カメール</td><td>A-2</td><td>B-2</td><td>ギャロップ</td><td></td><td></td></tr>
+      <tr><td>カメックス</td><td>A-3</td><td>B-3</td><td>サンダース</td><td></td><td></td></tr>
+      <tr><td>キャタピー</td><td>A-1</td><td>B-1</td><td>メノクラゲ</td><td></td><td></td></tr>
+      <tr><td>トランセル</td><td>A-2</td><td>B-2</td><td>パウワウ</td><td></td><td></td></tr>
+      <tr><td>バタフリー</td><td>A-3</td><td>B-3</td><td>カラカラ</td><td></td><td></td></tr>
+      <tr><td>ビードル</td><td>A-1</td><td>B-1</td><td>タマタマ</td><td></td><td></td></tr>
+      <tr><td>コクーン</td><td>A-2</td><td>B-2</td><td>ガラガラ</td><td></td><td></td></tr>
+      <tr><td>スピアー</td><td>A-3</td><td>B-3</td><td>フシギダネ</td><td></td><td></td></tr>
+      <tr><td>ポッポ</td><td>A-1</td><td>B-1</td><td>アーボ</td><td></td><td></td></tr>
+      <tr><td>ピジョン</td><td>A-2</td><td>B-2</td><td>イーブイ</td><td></td><td></td></tr>
+      <tr><td>ピジョット</td><td>A-3</td><td>B-3</td><td>ウツドン</td><td></td><td></td></tr>
+      <tr><td>コラッタ</td><td>A-1</td><td>B-1</td><td>エレブー</td><td></td><td></td></tr>
+      <tr><td>ラッタ</td><td>A-2</td><td>B-2</td><td>カビゴン</td><td></td><td></td></tr>
+      <tr><td>オニスズメ</td><td>A-3</td><td>B-3</td><td>カブト</td><td></td><td></td></tr>
+      <tr><td>オニドリル</td><td>A-1</td><td>B-1</td><td>サイドン</td><td></td><td></td></tr>
+      <tr><td>アーボ</td><td>A-2</td><td>B-2</td><td>ジュゴン</td><td></td><td></td></tr>
+      <tr><td>アーボック</td><td>A-3</td><td>B-3</td><td>ポリゴン</td><td></td><td></td></tr>
+      <tr><td>ピカチュウ</td><td>A-1</td><td>B-1</td><td>ディグダ</td><td></td><td></td></tr>
+      <tr><td>ライチュウ</td><td>A-2</td><td>B-2</td><td>ドードリオ</td><td></td><td></td></tr>
+      <tr><td>サンド</td><td>A-3</td><td>B-3</td><td>ゲンガー</td><td></td><td></td></tr>
+      <tr><td>サンドパン</td><td>A-1</td><td>B-1</td><td>ドガース</td><td></td><td></td></tr>
+      <tr><td>ニドラン♀ </td><td>A-2</td><td>B-2</td><td>ルージュラ</td><td></td><td></td></tr>
+      <tr><td>ニドリーナ</td><td>A-3</td><td>B-3</td><td>ニャース</td><td></td><td></td></tr>
+      <tr><td>ニドクイン</td><td>A-1</td><td>B-1</td><td>シャワーズ</td><td></td><td></td></tr>
+      <tr><td>ニドラン♂ </td><td>A-2</td><td>B-2</td><td>クサイハナ</td><td></td><td></td></tr>
+      <tr><td>ニドリーノ</td><td>A-3</td><td>B-3</td><td>コクーン</td><td></td><td></td></tr>
+      <tr><td>ニドキング</td><td>A-1</td><td>B-1</td><td>ゴースト</td><td></td><td></td></tr>
+      <tr><td>ピッピ</td><td>A-2</td><td>B-2</td><td>イワーク</td><td></td><td></td></tr>
+      <tr><td>ピクシー</td><td>A-3</td><td>B-3</td><td>ヒトカゲ</td><td></td><td></td></tr>
+      <tr><td>ロコン</td><td>A-1</td><td>B-1</td><td>ラッキー</td><td></td><td></td></tr>
+      <tr><td>キュウコン</td><td>A-2</td><td>B-2</td><td>ラッタ</td><td></td><td></td></tr>
+      <tr><td>プリン</td><td>A-3</td><td>B-3</td><td>オニドリル</td><td></td><td></td></tr>
+
+    </table>
+    -->
+  </body>
+</html>

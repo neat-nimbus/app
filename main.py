@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# coding:UTF-8
 #
 # Copyright 2007 Google Inc.
 #
@@ -17,6 +18,11 @@
 import webapp2
 import jinja2
 import os
+import model.registerModel
+import model.showModel
+import view.pokemonView
+import view.mainView
+import dataObject
 from google.appengine.ext import ndb
 
 ### HTML
@@ -27,56 +33,63 @@ JINJA_ENVIRONMENT = jinja2.Environment(
 
 class BaseHandler(webapp2.RequestHandler):
     def render(self, html, values={}):
-        template = JINJA_ENVIRONMENT.get_template(html)
+	template = JINJA_ENVIRONMENT.get_template(html)
         self.response.write(template.render(values))
-
 ### HTML end
-
-#class MainHandler(webapp2.RequestHandler):
-#def get(self):
-#self.response.write('neat nimbus!')
-
-class UserData(ndb.Model):
-    u_name = ndb.StringProperty()
-    u_date = ndb.TimeProperty(auto_now_add=True)
-
-class SingerData(ndb.Model):
-    s_name = ndb.StringProperty()
-    s_date = ndb.TimeProperty(auto_now_add=True)
 
 class MainHandler(BaseHandler):
     def get(self):
-        users = UserData.query().order(-UserData.u_date).fetch(10)
-        singers = SingerData.query().order(-SingerData.s_date).fetch(10)
-        values = { 'users':users,'singers':singers}
-        self.render('main.html',values)
+        # クライアント側から値を取り、オブジェクトにセットします
+        ### 初期画面なので何も値を取ってきません
+        
+        # モデルで値を処理します
+        mainViewInfo = dataObject.MainViewInfo()
+        showModel = model.showModel.ShowModel(mainViewInfo)
+        mainViewInfo = showModel.show()
+        
+        # 処理した値をビューに渡します
+        mainView = view.mainView.MainView(mainViewInfo)
+        values = mainView.getValues()
+        
+        # ビューで作られた値をhtmlにセットします
+        ### self.render('xxxx.html', values)の形式を守って書きます
+        self.render('main.html', values)        
 
-class GetHandler(BaseHandler):
+
+class RegisterHandler(BaseHandler):
     def get(self):
-        self.render('get.html')
+        # クライアント側から値を取り、オブジェクトにセットします
+        ### 初期画面なので何も値を取ってきません
+        
+        # モデルで値を処理します
+        ### 初期画面なので何もしません
+        
+        # 処理した値をビューに渡します
+        ### 初期画面なので何もしませんが、一応valuesを空で用意しておきます     
+        values = {}
+                
+        # ビューで作られた値をhtmlにセットします
+        ### self.render('xxxx.html', values)の形式を守って書きます
+        self.render('register.html', values)
+        
+        
     def post(self):
-        name = self.request.get('name')
-        if name is None:
-            self.redirect('/')
-        user = UserData()
-        user.u_name = name
-        user.put()
-        self.redirect('/get')
- 
-class SongHandler(BaseHandler):
-    def get(self):
-        self.render('song.html')
-    def post(self):
-        name = self.request.get('name')
-        if name is None:
-            self.redirect('/')
-        singer = SingerData()
-        singer.s_name = name
-        singer.put()
-        self.redirect('/song')
+        # クライアント側から値を取り、オブジェクトにセットします
+        updateInfo = dataObject.UpdateInfo(pokemon=self.request.get('pokemon'), team=self.request.get('team'))
+        
+        # モデルで値を処理します
+        registerModel = model.registerModel.RegisterModel(updateInfo)
+        updateInfo = registerModel.register()
+        
+        # 処理した値をビューに渡します
+        pokemonView = view.pokemonView.PokemonView(updateInfo)
+        values = pokemonView.getValues()
+        
+        # ビューで作られた値をhtmlにセットします
+        ### self.render('xxxx.html', values)の形式を守って書きます
+        self.render('register.html', values)
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
-    ('/get',GetHandler),
-    ('/song',SongHandler)
+    ('/register', RegisterHandler)
 ], debug=True)

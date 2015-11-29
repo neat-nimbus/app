@@ -7,25 +7,49 @@ DB1つに対して、1つのクラスといくつかのメソッドを持ちま�
 """
 
 from google.appengine.ext import ndb
+import logging
 
 class Counter(ndb.Model):
-    team = ndb.StringProperty()
     number = ndb.IntegerProperty()
     time = ndb.DateTimeProperty(auto_now_add=True)
+    
+def init():
+    """
+    dbの初期状態を作成する.すでに初期化されている場合は異常を返す
+    変数は取らない
+    返却型はBooleanで初期化成功はTrue、失敗はFalse
+    """
+    key = ndb.Key('Counter', u'ピクシーズ')
+    dao = key.get()    
+    if dao == None:
+        dao1 = Counter(id=u'ピクシーズ')
+        dao1.number = 0
+        dao2 = Counter(id=u'ゲンガーズ')
+        dao2.number = 0
+        daoList = [dao1, dao2]
+        ndb.put_multi(daoList)
+        logging.info("Counterの初期化に成功しました")
+        return True
+    else:
+        logging.warning("すでにCounterは初期化されています")
+        return False        
+
     
 def increment(updateInfo):
     """
     変数にはupdateInfoオブジェクトをとる
-    返却型は
-    登録正常：True
-    登録異常：False
-    暫定的にはバリデーションかかっていないため、常にTrueを返す.
+    返却型はBooleanで成功はTrue、失敗はFalse
     """
-    daoList = Counter.query(Counter.team == updateInfo.team).fetch(1)
-    dao = daoList[0]
-    dao.number = dao.number+1
-    dao.put()
-    return True
+    key = ndb.Key('Counter', updateInfo.team)
+    dao = key.get()
+    if dao != None:
+        dao.number = dao.number+1
+        dao.put()
+        return True
+    else:
+        logging.error("チーム名が不正で、DBから正しく取得できません")
+        return False
+        
 
 def getNumber(mainViewInfo):
     """
@@ -33,12 +57,9 @@ def getNumber(mainViewInfo):
     返却型はmainViewInfo
     暫定的にはバリデーションかかっていないため、常にTrueを返す.
     """
-    daoClefableList = Counter.query(Counter.team == u'ピクシーズ').fetch(1)
-    mainViewInfo.clefableNumber = daoClefableList[0].number
-    daoGengarList = Counter.query(Counter.team ==u'ゲンガーズ').fetch(1)
-    mainViewInfo.gengarNumber = daoGengarList[0].number
+    keys = [ndb.Key('Counter', u'ピクシーズ'), ndb.Key('Counter', u'ゲンガーズ')]
+    daos = ndb.get_multi(keys)
+    
+    mainViewInfo.clefableNumber = daos[0].number
+    mainViewInfo.gengarNumber = daos[1].number
     return mainViewInfo
-    
-    
-    
-    

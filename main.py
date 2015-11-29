@@ -18,10 +18,13 @@
 import webapp2
 import jinja2
 import os
+import logging
 import model.registerModel
 import model.showModel
+import model.initModel
 import view.pokemonView
 import view.mainView
+import view.adminView
 import dataObject
 from google.appengine.ext import ndb
 
@@ -89,7 +92,57 @@ class RegisterHandler(BaseHandler):
         ### self.render('xxxx.html', values)の形式を守って書きます
         self.render('register.html', values)
 
+
+class AdminHandler(BaseHandler):
+    def get(self):
+        # クライアント側から値を取り、オブジェクトにセットします
+        ### 初期画面なので何も値を取ってきません
+        
+        # モデルで値を処理します
+        ### 初期画面なので何もしません
+        
+        # 処理した値をビューに渡します
+        ### 初期画面なので何もしませんが、一応valuesを空で用意しておきます     
+        values = {}
+                
+        # ビューで作られた値をhtmlにセットします
+        ### self.render('xxxx.html', values)の形式を守って書きます
+        self.render('admin.html', values)
+
+    
+    def post(self):
+        # クライアント側から値を取り、オブジェクトにセットします
+        ### 今回は特例的にpasswordをStringで取得するだけにします
+        initPass = self.request.get('initPass') 
+        
+        if initPass == INITPASS:
+            # モデルで値を処理します
+            initModel = model.initModel.InitModel()
+            initFlag = initModel.init()
+            
+            # 処理した値をビューに渡します
+            ### 今回は特例的にinitFlagというBooleanを渡すだけにします
+            adminView = view.adminView.AdminView(initFlag)
+            values = adminView.getValues()
+
+        else:
+            logging.warning("DB初期化パスワードが違います")                    
+            # モデルで値を処理します
+            ### 処理はありません
+            
+            # 処理した値をビューに渡します
+            errorView = view.adminView.ErrorView()
+            values = errorView.getValues()
+            
+        # ビューで作られた値をhtmlにセットします
+        ### self.render('xxxx.html', values)の形式を守って書きます
+        self.render('admin.html', values)
+        
+
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
-    ('/register', RegisterHandler)
+    ('/register', RegisterHandler),
+    ('/admin', AdminHandler)
 ], debug=True)
+
+INITPASS = 'neat-nimbus'

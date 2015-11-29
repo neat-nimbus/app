@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>
+        ポケモン150匹企画リターンズ　管理者用ページ
+    </title>
+  </head>
+  <body>
+    <div>DB初期化コマンド</div>
+  <form action="/admin" method="POST">
+    <input type="password" name="initPass">
+    <input type="submit", value="DB初期化">
+  </form>
+  <a href=../>メインページへ戻る</a>
+  <br>
+  <div>
+  {{ message }}
+  </div>
+  </body>
+</html>

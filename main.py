@@ -22,9 +22,11 @@ import logging
 import model.registerModel
 import model.showModel
 import model.initModel
+import model.showDetailModel
 import view.pokemonView
 import view.mainView
 import view.adminView
+import view.detailView
 import dataObject
 from google.appengine.ext import ndb
 
@@ -139,10 +141,48 @@ class AdminHandler(BaseHandler):
         self.render('admin.html', values)
         
 
+class DetailHandler(BaseHandler):
+    def get(self):
+        # クライアント側から値を取り、オブジェクトにセットします
+        ### 初期画面なので何も値を取ってきません
+
+        # モデルで値を処理します
+        showDetailModel = model.showDetailModel.ShowDetailModel()
+        detailViewInfo = showDetailModel.show()
+        
+        # 処理した値をビューに渡します
+        detailView = view.detailView.DetailView(detailViewInfo)
+        values = detailView.getValues()
+        
+        # ビューで作られた値をhtmlにセットします
+        ### self.render('xxxx.html', values)の形式を守って書きます
+        self.render('detail.html', values)        
+
+
+class RuleHandler(BaseHandler):
+    def get(self):
+        # クライアント側から値を取り、オブジェクトにセットします
+        ### 初期画面なので何も値を取ってきません
+        
+        # モデルで値を処理します
+        ### 何もしません
+        
+        # 処理した値をビューに渡します
+        ### 何もしません
+        values = {}
+                        
+        # ビューで作られた値をhtmlにセットします
+        ### self.render('xxxx.html', values)の形式を守って書きます
+        self.render('rule.html', values)        
+
+
+
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/register', RegisterHandler),
-    ('/admin', AdminHandler)
+    ('/admin', AdminHandler),
+    ('/detail', DetailHandler),
+    ('/rule', RuleHandler)
 ], debug=True)
 
 INITPASS = 'neat-nimbus'

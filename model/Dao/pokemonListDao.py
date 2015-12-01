@@ -10,6 +10,8 @@ from google.appengine.ext import ndb
 import logging
 
 class PokemonList(ndb.Model):
+    pokemon = ndb.StringProperty()
+    normalOrder = ndb.IntegerProperty()
     clefableFlag = ndb.BooleanProperty()
     clefableTime = ndb.TimeProperty()
     gengarFlag = ndb.BooleanProperty()
@@ -26,8 +28,10 @@ def init():
     dao = key.get()
     if dao == None:
         daoList = []
-        for pokemon in POKEMON_LIST:
+        for normalOrder, pokemon in enumerate(POKEMON_LIST):
             dao = PokemonList(id=pokemon)
+            dao.normalOrder = normalOrder
+            dao.pokemon = pokemon
             dao.clefableFlag = False
             dao.gengarFlag = False
             daoList.append(dao)
@@ -69,6 +73,14 @@ def register(updateInfo):
     else:
         logging.error("ポケモン名が不正で、DBから正しく取得できません")
         return False
+
+
+def getAllSortedByNormalOrder():
+    """
+    変数はとらない
+    返却型はPokemonListのリスト型
+    """
+    return PokemonList.query().order(PokemonList.normalOrder).fetch()
 
 
 POKEMON_LIST = (u'フシギダネ',

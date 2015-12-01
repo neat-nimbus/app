@@ -1,0 +1,19 @@
+<html>
+  <head>
+    <title>
+        ポケモン150匹企画リターンズ
+    </title>
+  </head>
+  <body>
+    <div>ポケモン言えるかな?</div>
+   <div><a href=../>メインメニューへ戻る</a></div>
+   
+
+    {% for datum in detailViewInfo %}
+  <div>{{ datum.pokemon }}、ピクシーズ：{{ datum.clefableFlag }}、ゲンガーズ：{{ datum.gengarFlag }} </div>
+    {% endfor %}
+  <div>
+  <a href=../>メインメニューへ戻る</a>
+  </div>
+  </body>
+</html>

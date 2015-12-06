@@ -27,6 +27,7 @@ import view.pokemonView
 import view.mainView
 import view.adminView
 import view.detailView
+import view.registerView
 import dataObject
 from google.appengine.ext import ndb
 
@@ -67,15 +68,16 @@ class RegisterHandler(BaseHandler):
         ### 初期画面なので何も値を取ってきません
         
         # モデルで値を処理します
-        ### 初期画面なので何もしません
+        showDetailModel = model.showDetailModel.ShowDetailModel()
+        registerViewInfo = showDetailModel.show()
         
         # 処理した値をビューに渡します
-        ### 初期画面なので何もしませんが、一応valuesを空で用意しておきます     
-        values = {}
-                
+        registerView = view.registerView.RegisterView(registerViewInfo)
+        values = registerView.getValues()
+        
         # ビューで作られた値をhtmlにセットします
         ### self.render('xxxx.html', values)の形式を守って書きます
-        self.render('register.html', values)
+        self.render('register.html', values)        
         
         
     def post(self):
@@ -128,7 +130,7 @@ class AdminHandler(BaseHandler):
             values = adminView.getValues()
 
         else:
-            logging.warning("DB初期化パスワードが違います")                    
+            logging.warning(u"DB初期化パスワードが違います")                    
             # モデルで値を処理します
             ### 処理はありません
             
@@ -138,7 +140,7 @@ class AdminHandler(BaseHandler):
             
         # ビューで作られた値をhtmlにセットします
         ### self.render('xxxx.html', values)の形式を守って書きます
-        self.render('admin.html', values)
+            self.render('admin.html', values)
         
 
 class DetailHandler(BaseHandler):

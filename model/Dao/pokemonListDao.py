@@ -36,10 +36,10 @@ def init():
             dao.gengarFlag = False
             daoList.append(dao)
         ndb.put_multi(daoList)
-        logging.info("PokemonListの初期化に成功しました")
+        logging.info(u"PokemonListの初期化に成功しました")
         return True
     else:
-        logging.warning("すでにPokemonListは初期化されています")
+        logging.warning(u"すでにPokemonListは初期化されています")
         return False
 
 
@@ -59,7 +59,7 @@ def register(updateInfo):
                 dao.put()
                 return True
             else:
-                logging.error("ピクシーズのそのポケモンはすでに捕獲されています")
+                logging.error(u"ピクシーズのそのポケモンはすでに捕獲されています")
                 return False
         elif updateInfo.team == u'ゲンガーズ':
             if dao.gengarFlag == False:
@@ -68,7 +68,7 @@ def register(updateInfo):
                 dao.put()
                 return True
             else:
-                logging.error("ゲンガーズのそのポケモンはすでに捕獲されています")
+                logging.error(u"ゲンガーズのそのポケモンはすでに捕獲されています")
                 return False
     else:
         logging.error("ポケモン名が不正で、DBから正しく取得できません")

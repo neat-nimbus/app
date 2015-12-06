@@ -28,10 +28,10 @@ def init():
         dao2.number = 0
         daoList = [dao1, dao2]
         ndb.put_multi(daoList)
-        logging.info("Counterの初期化に成功しました")
+        logging.info(u"Counterの初期化に成功しました")
         return True
     else:
-        logging.warning("すでにCounterは初期化されています")
+        logging.warning(u"すでにCounterは初期化されています")
         return False        
 
     
@@ -47,7 +47,7 @@ def increment(updateInfo):
         dao.put()
         return True
     else:
-        logging.error("チーム名が不正で、DBから正しく取得できません")
+        logging.error(u"チーム名が不正で、DBから正しく取得できません")
         return False
         
 

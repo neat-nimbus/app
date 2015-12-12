@@ -1,21 +1,222 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
   <head>
     <meta charset="UTF-8">
     <title>
         ポケモン150匹企画リターンズ
     </title>
+      <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    <script>
+        $(function () {
+            var pokemon_order = [
+                  "ピ力チュウ",
+                  "カイリュー",
+                  "ヤドラン",
+                  "ピジョン",
+                  "コダック",
+                  "コラッタ",
+                  "ズバット",
+                  "ギャロップ",
+                  "サンダース",
+                  "メノクラゲ",
+                  "パウワウ",
+                  "カラカラ",
+                  "タマタマ",
+                  "ガラガラ",
+                  "フシギダネ",
+                  "アーボ",
+                  "イーブイ",
+                  "ウツドン",
+                  "エレブー",
+                  "カビゴン",
+                  "カブ卜",
+                  "サイドン",
+                  "ジュゴン",
+                  "ポリゴン",
+                  "ディグダ",
+                  "ドードリオ",
+                  "ゲンガー",
+                  "ドガース",
+                  "ルージュラ",
+                  "ニャース",
+                  "シャワーズ",
+                  "クサイハナ",
+                  "コクーン",
+                  "ゴースト",
+                  "イワーク",
+                  "ヒトカゲ",
+                  "ラッキー",
+                  "ラッタ",
+                  "オニドリル",
+                  "コイル",
+                  "レアコイル",
+                  "プクリン",
+                  "ゼニガメ",
+                  "ニョロゾ",
+                  "トサキント",
+                  "ファイヤー",
+                  "ブースター",
+                  "フーディン",
+                  "ブーバー",
+                  "ストライク",
+                  "キャタピー",
+                  "ピクシー",
+                  "シードラ",
+                  "ライチュウ",
+                  "ヒトデマン",
+                  "クラブ",
+                  "ニドクイン",
+                  "サンドパン",
+                  "アズマオウ",
+                  "卜ランセル",
+                  "ドードー",
+                  "タッツー",
+                  "ガーディ",
+                  "マンキー",
+                  "ドククラゲ",
+                  "オニスズメ",
+                  "サンド",
+                  "パラセクト",
+                  "スリープ",
+                  "ビードル",
+                  "カイロス",
+                  "ピジョット",
+                  "コイキング",
+                  "サイホーン",
+                  "マタドガス",
+                  "フシギソウ",
+                  "カメックス",
+                  "シェルダー",
+                  "サンダー",
+                  "リザード",
+                  "ナッシー",
+                  "べトべトン",
+                  "ポッポ",
+                  "ウツボット",
+                  "プリン",
+                  "ケーシィ",
+                  "べ卜べター",
+                  "ガルーラ",
+                  "ギャラドス",
+                  "ゴローニャ",
+                  "ピッピ",
+                  "イシツブテ",
+                  "ゴルダック",
+                  "オムナイト",
+                  "ゴルバット",
+                  "アーボック",
+                  "ニドラン♀",
+                  "ニドラン♂",
+                  "ナゾノクサ",
+                  "ニョロボン",
+                  "カモネギ",
+                  "ラプラス",
+                  "ラフレシア",
+                  "力ブトプス",
+                  "ニドリーナ",
+                  "バリヤード",
+                  "マルマイン",
+                  "フシギバナ",
+                  "パラス",
+                  "リザードン",
+                  "コンパン",
+                  "ヤドン",
+                  "メタモン",
+                  "ゴース",
+                  "ビリリダマ",
+                  "ユンゲラー",
+                  "キングラー",
+                  "サワムラー",
+                  "エビワラー",
+                  "カイリキー",
+                  "スリーパー",
+                  "ゴーリキー",
+                  "スターミー",
+                  "マダツボミ",
+                  "プテラ",
+                  "ニドリーノ",
+                  "ぺルシアン",
+                  "ハクリュー",
+                  "ミュウツー",
+                  "キュウコン",
+                  "スピアー",
+                  "べロリンガ",
+                  "バタフリー",
+                  "ダグ卜リオ",
+                  "ニドキング",
+                  "オムスター",
+                  "パルシェン",
+                  "ニョロモ",
+                  "ゴローン",
+                  "ロコン",
+                  "ケンタロス",
+                  "ポニータ",
+                  "モンジャラ",
+                  "ミニリュウ",
+                  "ワンリキー",
+                  "モルフォン",
+                  "カメール",
+                  "ウィンディ",
+                  "フリーザー",
+                  "オコリザル",
+                  "ミュウ"
+            ];
+
+            var gengaa_index = 0;
+            if ($.cookie("gengaa_index")) {
+                gengaa_index = $.cookie("gengaa_index");
+            }
+            var isGengaa = false;
+            if ($.cookie("isGengaa")) {
+                isGengaa = true;
+            } else {
+                isGengaa = false;
+            }
+            if (isGengaa) {
+                $("#select_team").val("ゲンガーズ");
+                var gengaa_text = pokemon_order[gengaa_index];
+                $("#name_gengaa").show().val(gengaa_text);
+                $("#name_pikusii").hide().val(gengaa_text);
+            } else {
+                $("#select_team").val("ピクシーズ");
+                $("#name_gengaa").hide();
+            }
+            $("#name_gengaa").attr("readonly", true);
+            $("#select_team").change(function () {
+                if ($(this).val() == "ピクシーズ") {
+                    $("#name_pikusii").show().val("");
+                    $("#name_gengaa").hide();
+                    isGengaa = false;
+                } else if ($(this).val() == "ゲンガーズ") {
+                    var gengaa_text = pokemon_order[gengaa_index];
+                    $("#name_gengaa").show().val(gengaa_text);
+                    $("#name_pikusii").hide().val(gengaa_text);
+                    isGengaa = true;
+                }
+            });
+            $("#submit").click(function () {
+                if (isGengaa) {
+                    gengaa_index++;
+                    $.cookie("gengaa_index", gengaa_index);
+                    var gengaa_text = pokemon_order[gengaa_index];
+                }
+                $.cookie("isGengaa", isGengaa);
+            });
+        });
+    </script>
   </head>
   <body>
     <div>登録画面</div>
     
   <form action="/register" method="POST">
-    <input type="text" name="pokemon">
-    <select name="team">
+    <input type="text" name="pokemon" id="name_pikusii" />
+    <input type="text" id="name_gengaa" />
+    <select name="team" id="select_team">
       <option value="ピクシーズ">ピクシーズ</option>
       <option value="ゲンガーズ">ゲンガーズ</option>
     </select>
-    <input type="submit", value="送信">
+    <input type="submit" value="送信" id="submit" />
   </form>
     <!-- この書き方はjinja2特有の書き方で、if文などを書けます -->
     {% if getPokemon %}

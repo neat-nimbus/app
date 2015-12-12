@@ -223,6 +223,12 @@
       今入力したのは{{ getPokemon }}で、捕まえたチームは{{ getTeam }}です。
     {% endif %}
 
+    <!-- 一応画面に保持しているデータを出しているだけです -->
+    {% for datum in registerViewInfo %}
+  <div>{{ datum.pokemon }}、ピクシーズ：{{ datum.clefableFlag }}、ゲンガーズ：{{ datum.gengarFlag }} </div>
+    {% endfor %}
+  <div>
+
   <a href=../>メインページへ戻る</a>
   </body>
 </html>

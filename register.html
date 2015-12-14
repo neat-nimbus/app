@@ -164,15 +164,15 @@
             ];
 
             var gengaa_index = 0;
+            var isGengaa = false;
+            //クッキーの読み込み
             if ($.cookie("gengaa_index")) {
                 gengaa_index = $.cookie("gengaa_index");
             }
-            var isGengaa = false;
             if ($.cookie("isGengaa")) {
                 isGengaa = true;
-            } else {
-                isGengaa = false;
             }
+            //初期設定
             if (isGengaa) {
                 $("#select_team").val("ゲンガーズ");
                 var gengaa_text = pokemon_order[gengaa_index];
@@ -182,7 +182,8 @@
                 $("#select_team").val("ピクシーズ");
                 $("#name_gengaa").hide();
             }
-            $("#name_gengaa").attr("readonly", true);
+            $("#name_gengaa").prop("disabled", true);
+            //イベント処理
             $("#select_team").change(function () {
                 if ($(this).val() == "ピクシーズ") {
                     $("#name_pikusii").show().val("");
@@ -196,12 +197,13 @@
                 }
             });
             $("#submit").click(function () {
+                $(this).prop("disabled", true);
+                $.removeCookie("isGengaa");
                 if (isGengaa) {
                     gengaa_index++;
                     $.cookie("gengaa_index", gengaa_index);
-                    var gengaa_text = pokemon_order[gengaa_index];
+                    $.cookie("isGengaa", true);
                 }
-                $.cookie("isGengaa", isGengaa);
             });
         });
     </script>
@@ -227,7 +229,6 @@
     {% for datum in registerViewInfo %}
   <div>{{ datum.pokemon }}、ピクシーズ：{{ datum.clefableFlag }}、ゲンガーズ：{{ datum.gengarFlag }} </div>
     {% endfor %}
-  <div>
 
   <a href=../>メインページへ戻る</a>
   </body>

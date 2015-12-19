@@ -71,7 +71,7 @@ def register(updateInfo):
                 logging.error(u"ゲンガーズのそのポケモンはすでに捕獲されています")
                 return False
     else:
-        logging.error("ポケモン名が不正で、DBから正しく取得できません")
+        logging.error(u"ポケモン名が不正で、DBから正しく取得できません")
         return False
 
 

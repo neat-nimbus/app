@@ -23,7 +23,7 @@ import model.registerModel
 import model.showModel
 import model.initModel
 import model.showDetailModel
-import view.pokemonView
+#import view.pokemonView
 import view.mainView
 import view.adminView
 import view.detailView
@@ -68,11 +68,12 @@ class RegisterHandler(BaseHandler):
         ### 初期画面なので何も値を取ってきません
         
         # モデルで値を処理します
-        showDetailModel = model.showDetailModel.ShowDetailModel()
-        registerViewInfo = showDetailModel.show()
+        mainViewInfo = dataObject.MainViewInfo()
+        showModel = model.showModel.ShowModel(mainViewInfo)
+        registerViewInfo = showModel.show()
         
         # 処理した値をビューに渡します
-        registerView = view.registerView.RegisterView(registerViewInfo)
+        registerView = view.registerView.InitView(registerViewInfo)
         values = registerView.getValues()
         
         # ビューで作られた値をhtmlにセットします
@@ -86,11 +87,15 @@ class RegisterHandler(BaseHandler):
         
         # モデルで値を処理します
         registerModel = model.registerModel.RegisterModel(updateInfo)
-        updateInfo = registerModel.register()
+        registerFlag = registerModel.register()
         
         # 処理した値をビューに渡します
-        pokemonView = view.pokemonView.PokemonView(updateInfo)
-        values = pokemonView.getValues()
+        if registerFlag:
+            pokemonView = view.registerView.RegisterView(updateInfo)
+            values = pokemonView.getValues()
+        else:
+            errorView = view.registerView.ErrorView()
+            values = errorView.getValues()
         
         # ビューで作られた値をhtmlにセットします
         ### self.render('xxxx.html', values)の形式を守って書きます
@@ -140,7 +145,7 @@ class AdminHandler(BaseHandler):
             
         # ビューで作られた値をhtmlにセットします
         ### self.render('xxxx.html', values)の形式を守って書きます
-            self.render('admin.html', values)
+        self.render('admin.html', values)
         
 
 class DetailHandler(BaseHandler):

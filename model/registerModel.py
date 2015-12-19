@@ -6,21 +6,32 @@ DBに捕まえたポケモンの情報を登録する機能を持ちます
 
 import Dao.pokemonListDao
 import Dao.counterDao
+import logging
 
-class RegisterModel:
+class RegisterModel():
     def __init__(self, updateInfo):
         self.updateInfo = updateInfo
 
     def register(self):
         """
-        変数を取らず、updateInfoオブジェクトを返します
+        変数を取らず、登録正常かどうかのフラグを返します.
+        登録正常：True
+        登録異常：False
         """
         if (self.updateInfo.team == u'ピクシーズ' or self.updateInfo.team == u'ゲンガーズ'):
-            Dao.counterDao.increment(self.updateInfo)
-            Dao.pokemonListDao.register(self.updateInfo)
-            return self.updateInfo
+            flag = Dao.pokemonListDao.register(self.updateInfo)
+            if flag:
+                Dao.counterDao.increment(self.updateInfo)
+                return True
+            else:
+                """
+                異常時ハンドリングはまだ
+                """
+                return False
         else:
             """
             異常時ハンドリングはまだ
             """
-            pass
+            return False
+    
+        

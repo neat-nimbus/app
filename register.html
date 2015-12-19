@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
   <head>
     <meta charset="UTF-8">
@@ -10,7 +10,7 @@
     <script>
         $(function () {
             var pokemon_order = [
-                  "ピ力チュウ",
+                  "ピカチュウ",
                   "カイリュー",
                   "ヤドラン",
                   "ピジョン",
@@ -30,7 +30,7 @@
                   "ウツドン",
                   "エレブー",
                   "カビゴン",
-                  "カブ卜",
+                  "カブト",
                   "サイドン",
                   "ジュゴン",
                   "ポリゴン",
@@ -69,7 +69,7 @@
                   "ニドクイン",
                   "サンドパン",
                   "アズマオウ",
-                  "卜ランセル",
+                  "トランセル",
                   "ドードー",
                   "タッツー",
                   "ガーディ",
@@ -91,12 +91,12 @@
                   "サンダー",
                   "リザード",
                   "ナッシー",
-                  "べトべトン",
+                  "ベトベトン",
                   "ポッポ",
                   "ウツボット",
                   "プリン",
                   "ケーシィ",
-                  "べ卜べター",
+                  "ベトベター",
                   "ガルーラ",
                   "ギャラドス",
                   "ゴローニャ",
@@ -113,7 +113,7 @@
                   "カモネギ",
                   "ラプラス",
                   "ラフレシア",
-                  "力ブトプス",
+                  "カブトプス",
                   "ニドリーナ",
                   "バリヤード",
                   "マルマイン",
@@ -136,14 +136,14 @@
                   "マダツボミ",
                   "プテラ",
                   "ニドリーノ",
-                  "ぺルシアン",
+                  "ペルシアン",
                   "ハクリュー",
                   "ミュウツー",
                   "キュウコン",
                   "スピアー",
-                  "べロリンガ",
+                  "ベロリンガ",
                   "バタフリー",
-                  "ダグ卜リオ",
+                  "ダグトリオ",
                   "ニドキング",
                   "オムスター",
                   "パルシェン",
@@ -157,21 +157,24 @@
                   "ワンリキー",
                   "モルフォン",
                   "カメール",
-                  "ウィンディ",
+                  "ウインディ",
                   "フリーザー",
                   "オコリザル",
                   "ミュウ"
             ];
-
-            var gengaa_index = 0;
+            
+            var gengaa_index;
             var isGengaa = false;
             //クッキーの読み込み
-            if ($.cookie("gengaa_index")) {
+            {% if registerViewInfo %}
+                gengaa_index = Number("{{ registerViewInfo.gengarNumber }}");
+            {% else %}
                 gengaa_index = $.cookie("gengaa_index");
-            }
+            {% endif %}
             if ($.cookie("isGengaa")) {
                 isGengaa = true;
             }
+            
             //初期設定
             if (isGengaa) {
                 $("#select_team").val("ゲンガーズ");
@@ -206,6 +209,7 @@
                 }
             });
         });
+        
     </script>
   </head>
   <body>
@@ -223,12 +227,9 @@
     <!-- この書き方はjinja2特有の書き方で、if文などを書けます -->
     {% if getPokemon %}
       今入力したのは{{ getPokemon }}で、捕まえたチームは{{ getTeam }}です。
+    {% else %}
+      {{ message }}
     {% endif %}
-
-    <!-- 一応画面に保持しているデータを出しているだけです -->
-    {% for datum in registerViewInfo %}
-  <div>{{ datum.pokemon }}、ピクシーズ：{{ datum.clefableFlag }}、ゲンガーズ：{{ datum.gengarFlag }} </div>
-    {% endfor %}
 
   <a href=../>メインページへ戻る</a>
   </body>

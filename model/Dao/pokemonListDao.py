@@ -49,30 +49,34 @@ def register(updateInfo):
     返却型はBooleanで登録成功はTrue、失敗はFalse
     登録時刻部分はまだ実装していない
     """
-    key = ndb.Key('PokemonList', updateInfo.pokemon)
-    dao = key.get()
-    if dao != None:
-        if updateInfo.team == u'ピクシーズ':
-            if dao.clefableFlag == False:
-                dao.clefableFlag = True
-                #dao.clefableTime = updateInfo.time
-                dao.put()
-                return True
-            else:
-                logging.error(u"ピクシーズのそのポケモンはすでに捕獲されています")
-                return False
-        elif updateInfo.team == u'ゲンガーズ':
-            if dao.gengarFlag == False:
-                dao.gengarFlag = True
-                #dao.gengarTime = updateInfo.time
-                dao.put()
-                return True
-            else:
-                logging.error(u"ゲンガーズのそのポケモンはすでに捕獲されています")
-                return False
+    if updateInfo.pokemon != '':
+        key = ndb.Key('PokemonList', updateInfo.pokemon)
+        dao = key.get()
+        if dao != None:
+            if updateInfo.team == u'ピクシーズ':
+                if dao.clefableFlag == False:
+                    dao.clefableFlag = True
+                    #dao.clefableTime = updateInfo.time
+                    dao.put()
+                    return True
+                else:
+                    logging.error(u"ピクシーズのそのポケモンはすでに捕獲されています")
+                    return False
+            elif updateInfo.team == u'ゲンガーズ':
+                if dao.gengarFlag == False:
+                    dao.gengarFlag = True
+                    #dao.gengarTime = updateInfo.time
+                    dao.put()
+                    return True
+                else:
+                    logging.error(u"ゲンガーズのそのポケモンはすでに捕獲されています")
+                    return False
+        else:
+            logging.error(u"ポケモン名が不正で、DBから正しく取得できません")
+            return False
     else:
-        logging.error(u"ポケモン名が不正で、DBから正しく取得できません")
-        return False
+        logging.error(u"ポケモン名がブランクです")
+
 
 
 def getAllSortedByNormalOrder():

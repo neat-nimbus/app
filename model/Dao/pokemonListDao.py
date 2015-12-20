@@ -13,9 +13,9 @@ class PokemonList(ndb.Model):
     pokemon = ndb.StringProperty()
     normalOrder = ndb.IntegerProperty()
     clefableFlag = ndb.BooleanProperty()
-    clefableTime = ndb.TimeProperty()
+    clefableTime = ndb.IntegerProperty()
     gengarFlag = ndb.BooleanProperty()
-    gengarTime = ndb.TimeProperty()
+    gengarTime = ndb.IntegerProperty()
 
     
 def init():
@@ -56,7 +56,7 @@ def register(updateInfo):
             if updateInfo.team == u'ピクシーズ':
                 if dao.clefableFlag == False:
                     dao.clefableFlag = True
-                    #dao.clefableTime = updateInfo.time
+                    dao.clefableTime = updateInfo.time
                     dao.put()
                     return True
                 else:
@@ -65,7 +65,7 @@ def register(updateInfo):
             elif updateInfo.team == u'ゲンガーズ':
                 if dao.gengarFlag == False:
                     dao.gengarFlag = True
-                    #dao.gengarTime = updateInfo.time
+                    dao.gengarTime = updateInfo.time
                     dao.put()
                     return True
                 else:

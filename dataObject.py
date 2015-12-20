@@ -15,6 +15,7 @@ class UpdateInfo():
     def __init__(self, pokemon, team):
         self.pokemon = pokemon
         self.team = team
+        self.time = 0
 
 
 class MainViewInfo():

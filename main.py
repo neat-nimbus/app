@@ -122,17 +122,44 @@ class AdminHandler(BaseHandler):
     def post(self):
         # クライアント側から値を取り、オブジェクトにセットします
         ### 今回は特例的にpasswordをStringで取得するだけにします
-        initPass = self.request.get('initPass') 
-        
+        initPass = self.request.get('initPass')
+        dbInit = self.request.get('dbInit')
+        startGame = self.request.get('startGame')
+
         if initPass == INITPASS:
-            # モデルで値を処理します
-            initModel = model.initModel.InitModel()
-            initFlag = initModel.init()
+            if dbInit != '' and startGame == '':        
+                # モデルで値を処理します
+                initModel = model.initModel.InitModel()
+                initFlag = initModel.init()
+                
+                # 処理した値をビューに渡します
+                ### 今回は特例的にinitFlagというBooleanを渡すだけにします
+                adminView = view.adminView.AdminView(initFlag)
+                values = adminView.getValues()
             
-            # 処理した値をビューに渡します
-            ### 今回は特例的にinitFlagというBooleanを渡すだけにします
-            adminView = view.adminView.AdminView(initFlag)
-            values = adminView.getValues()
+        
+            elif dbInit == '' and startGame != '':
+                # クライアント側から値を取り、オブジェクトにセットします
+                ### 何もしません
+            
+                # モデルで値を処理します
+                initTimeModel = model.initModel.InitModel()
+                initFlag = initTimeModel.initTime()
+            
+                # 処理した値をビューに渡します
+                ### 今回は特例的にinitFlagというBooleanを渡すだけにします
+                adminView = view.adminView.AdminView(initFlag)
+                values = adminView.getValues()
+
+        
+            else:
+                logging.fatal(u"不明なPOSTが送信されています")
+                # モデルで値を処理します
+                ### 処理はありません
+            
+                # 処理した値をビューに渡します
+                errorView = view.adminView.ErrorView()
+                values = errorView.getValues()
 
         else:
             logging.warning(u"DB初期化パスワードが違います")                    
@@ -142,11 +169,13 @@ class AdminHandler(BaseHandler):
             # 処理した値をビューに渡します
             errorView = view.adminView.ErrorView()
             values = errorView.getValues()
-            
+
         # ビューで作られた値をhtmlにセットします
         ### self.render('xxxx.html', values)の形式を守って書きます
         self.render('admin.html', values)
-        
+
+            
+            
 
 class DetailHandler(BaseHandler):
     def get(self):
@@ -181,7 +210,6 @@ class RuleHandler(BaseHandler):
         # ビューで作られた値をhtmlにセットします
         ### self.render('xxxx.html', values)の形式を守って書きます
         self.render('rule.html', values)        
-
 
 
 app = webapp2.WSGIApplication([

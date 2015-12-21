@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
   <head>
     <meta charset="UTF-8">
@@ -185,7 +185,7 @@
                 $("#select_team").val("ピクシーズ");
                 $("#name_gengaa").hide();
             }
-            $("#name_gengaa").prop("disabled", true);
+            //$("#name_gengaa").prop("disabled", true);
             //イベント処理
             $("#select_team").change(function () {
                 if ($(this).val() == "ピクシーズ") {
@@ -198,6 +198,7 @@
                     $("#name_pikusii").hide().val(gengaa_text);
                     isGengaa = true;
                 }
+                alert("チームを変更します");
             });
             $("#submit").click(function () {
                 //$(this).prop("disabled", true);
@@ -224,6 +225,7 @@
     </select>
     <input type="submit" value="送信" id="submit" />
   </form>
+  
     <!-- この書き方はjinja2特有の書き方で、if文などを書けます -->
     {% if getPokemon %}
       今入力したのは{{ getPokemon }}で、捕まえたチームは{{ getTeam }}です。

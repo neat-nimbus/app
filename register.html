@@ -161,8 +161,7 @@
                   "カメール",
                   "ウインディ",
                   "フリーザー",
-                  "オコリザル",
-                  "ミュウ"
+                  "オコリザル"
             ];
             
             var gengaa_index;
@@ -177,35 +176,38 @@
                 isGengaa = true;
             }
             
+            var gengaa_text = pokemon_order[gengaa_index];
+            
             //初期設定
             if (isGengaa) {
                 $("#select_team").val("ゲンガーズ");
-                var gengaa_text = pokemon_order[gengaa_index];
-                $("#name_gengaa").show().val(gengaa_text);
-                $("#name_pikusii").hide().val(gengaa_text);
+                $("#pokemon_name").val(gengaa_text);
             } else {
                 $("#select_team").val("ピクシーズ");
-                $("#name_gengaa").hide();
             }
-            $("#name_gengaa").prop("disabled", true);
-            $("#name_pikusii").autocomplete({
-                source: pokemon_order
+            $("#pokemon_name").autocomplete({
+                source: function(request, response) {
+                    var term = request.term.replace(/[ぁ-ん]/g, function(s) {
+                        return String.fromCharCode(s.charCodeAt(0) + 0x60);
+                    });
+                    var re = new RegExp("^(" + term + ")");
+                    response($.grep(pokemon_order, function(value) {
+                        return value.match(re);
+                    }));
+                }
             });
             //イベント処理
             $("#select_team").change(function () {
                 if ($(this).val() == "ピクシーズ") {
-                    $("#name_pikusii").show().val("");
-                    $("#name_gengaa").hide();
+                    $("#pokemon_name").val("");
                     isGengaa = false;
                 } else if ($(this).val() == "ゲンガーズ") {
-                    var gengaa_text = pokemon_order[gengaa_index];
-                    $("#name_gengaa").show().val(gengaa_text);
-                    $("#name_pikusii").hide().val(gengaa_text);
+                    $("#pokemon_name").val(gengaa_text);
                     isGengaa = true;
                 }
+                alert("チームを変更します");
             });
             $("#submit").click(function () {
-                //$(this).prop("disabled", true);
                 $.removeCookie("isGengaa");
                 if (isGengaa) {
                     gengaa_index++;
@@ -221,14 +223,14 @@
     <div>登録画面</div>
     
   <form action="/register" method="POST">
-    <input type="text" name="pokemon" id="name_pikusii" />
-    <input type="text" id="name_gengaa" />
+      <input type="text" name="pokemon" id="pokemon_name" />
     <select name="team" id="select_team">
       <option value="ピクシーズ">ピクシーズ</option>
       <option value="ゲンガーズ">ゲンガーズ</option>
     </select>
     <input type="submit" value="送信" id="submit" />
   </form>
+  
     <!-- この書き方はjinja2特有の書き方で、if文などを書けます -->
     {% if getPokemon %}
       今入力したのは{{ getPokemon }}で、捕まえたチームは{{ getTeam }}です。

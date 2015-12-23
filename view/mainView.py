@@ -4,15 +4,24 @@
 ビューは必ず、メソッドの返却型を辞書型にする必要があります
 """
 
+import common
+
 class MainView():
     def __init__(self, mainViewInfo):
         self.clefableNumber = mainViewInfo.clefableNumber
         self.gengarNumber = mainViewInfo.gengarNumber
-        #self.pokemonList = mainView.pokemonList
+        self.pokemonList = mainViewInfo.pokemonList
 
     def getValues(self):
-        #for pokemon in self.pokemonList:
-            #pokemon.encode('utf_8')
-        #return {'clefableNumber':self.clefableNumber,'gengarNumber':self.gengarNumber,'pokemonList':self.pokemonList}
+        """
+        時間(秒)をHH:MM:SSに変換して表示する
+        """
+        for datum in self.pokemonList:
+            if datum.clefableFlag:
+                datum.clefableStrTime = common.toHms(datum.clefableTime)
+            if datum.gengarFlag:
+                datum.gengarStrTime = common.toHms(datum.gengarTime)
+
         return {'clefableNumber':self.clefableNumber
-               ,'gengarNumber':self.gengarNumber}
+               ,'gengarNumber':self.gengarNumber
+               ,'pokemonList':self.pokemonList}

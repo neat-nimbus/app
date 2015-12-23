@@ -8,6 +8,7 @@ DB1つに対して、1つのクラスといくつかのメソッドを持ちま�
 
 from google.appengine.ext import ndb
 import logging
+import copy
 
 class PokemonList(ndb.Model):
     pokemon = ndb.StringProperty()
@@ -16,7 +17,7 @@ class PokemonList(ndb.Model):
     clefableTime = ndb.IntegerProperty()
     gengarFlag = ndb.BooleanProperty()
     gengarTime = ndb.IntegerProperty()
-
+    
     
 def init():
     """
@@ -78,6 +79,44 @@ def register(updateInfo):
         logging.error(u"ポケモン名がブランクです")
 
 
+def delete(updateInfo):
+    """
+    変数にはupdateInfoオブジェクトをとる
+    返却型はBooleanで登録成功はTrue、失敗はFalse
+    登録時刻部分はまだ実装していない
+    """
+    if updateInfo.pokemon != '':
+        key = ndb.Key('PokemonList', updateInfo.pokemon)
+        dao = key.get()
+        if dao != None:
+            if updateInfo.team == u'ピクシーズ':
+                if dao.clefableFlag == True:
+                    dao.clefableFlag = False
+                    dao.clefableTime = None
+                    dao.put()
+                    return True
+                else:
+                    logging.error(u"ピクシーズのそのポケモンはまだ捕獲されていません")
+                    return False
+            elif updateInfo.team == u'ゲンガーズ':
+                if dao.gengarFlag == True:
+                    dao.gengarFlag = False
+                    dao.gengarTime = None
+                    dao.put()
+                    return True
+                else:
+                    logging.error(u"ゲンガーズのそのポケモンはまだ捕獲されていません")
+                    return False
+        else:
+            logging.error(u"ポケモン名が不正で、DBから正しく取得できません")
+            return False
+    else:
+        logging.error(u"ポケモン名がブランクです")
+
+
+
+
+
 
 def getAllSortedByNormalOrder():
     """
@@ -85,6 +124,37 @@ def getAllSortedByNormalOrder():
     返却型はPokemonListのリスト型
     """
     return PokemonList.query().order(PokemonList.normalOrder).fetch()
+
+
+def getSortedByRecentGet(number):
+    """
+    変数はとってくるデータの数
+    返却型はPokemonListのリスト型
+    """
+    clefable = PokemonList.query().order(-PokemonList.clefableTime).fetch(number)
+    gengar = PokemonList.query().order(-PokemonList.gengarTime).fetch(number)
+    
+    c = 0
+    g = 0
+    val = []
+        
+    for i in range(number):
+        if clefable[c].clefableFlag or gengar[g].gengarFlag:
+            if clefable[c].clefableTime >= gengar[g].gengarTime:
+                clefable[c] = copy.copy(clefable[c])
+                clefable[c].clefableViewFlag = True
+                clefable[c].gengarViewFlag = False
+                val.append(clefable[c])
+                c += 1
+            else:
+                gengar[g] = copy.copy(gengar[g])
+                gengar[g].gengarViewFlag = True
+                gengar[g].clefableViewFlag = False
+                val.append(gengar[g])
+                g += 1
+            
+    return val
+
 
 
 POKEMON_LIST = (u'フシギダネ',

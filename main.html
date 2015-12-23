@@ -10,10 +10,38 @@
   <form action="/register", method="GET">
     <input type="submit", value="登録ページへ遷移する">
   </form>
-  
-  {{ clefableNumber }}：ピクシーズ <br>
-  {{ gengarNumber }}：ゲンガーズ<br>
-  
+    <div>
+        {{ clefableNumber }}：ピクシーズ
+    </div>
+    <div>
+        {{ gengarNumber }}：ゲンガーズ
+    </div>
+    
+    <div>
+    最近20匹の状況
+    </div>
+    <div>
+    <table>
+        <tr>
+            <th>チーム</th>
+            <th>ポケモン</th>
+            <th>捕獲時間</th>
+        </tr>        
+        {% for pokemon in pokemonList %}
+        <tr>
+        {% if pokemon.clefableViewFlag %}
+            <td>ピクシーズ</td>
+            <td>{{pokemon.pokemon}}</td>
+            <td>{{pokemon.clefableStrTime}}</td>
+        {% elif pokemon.gengarViewFlag %}
+            <td>ゲンガーズ</td>
+            <td>{{pokemon.pokemon}}</td>
+            <td>{{pokemon.gengarStrTime}}</td>
+        {% endif %}
+        </tr>
+        {% endfor %}
+    </table>
+    </div>
   <div>
   <a href=/detail>詳細ページへ</a>
   </div>

@@ -2,16 +2,42 @@
   <head>
     <title>
         ポケモン150匹企画リターンズ
-    </title>
+    </title>    
   </head>
   <body>
     <div>ポケモン言えるかな?</div>
-   <div><a href=../>メインメニューへ戻る</a></div>
-   
-
-    {% for datum in detailViewInfo %}
-  <div>{{ datum.pokemon }}、ピクシーズ：{{ datum.clefableTime }}、ゲンガーズ：{{ datum.gengarTime }} </div>
-    {% endfor %}
+    <div><a href=../>メインメニューへ戻る</a></div>
+    <div>
+        <form action="/detail" method="POST">
+            並べ替え：
+            <select name="sortMode">
+                <option value="ピクシーズ">ピクシーズ</option>
+                <option value="ゲンガーズ">ゲンガーズ</option>
+            <input type="submit" />
+        </form>
+    
+    <table id="pokemonTable">
+        <tr>
+            <th></th>
+            <th>ピクシーズ</th>
+            <th>ゲンガーズ</th>
+        </tr>
+        {% for datum in detailViewInfo %}
+        <tr>
+            <td>{{ datum.pokemon }}</td>
+            <td>
+            {% if datum.clefableFlag %}
+                {{ datum.clefableStrTime }}
+            {% endif %}
+            </td>
+            <td>
+            {% if datum.gengarFlag %}
+                {{ datum.gengarStrTime }}
+            {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
   <div>
   <a href=../>メインメニューへ戻る</a>
   </div>

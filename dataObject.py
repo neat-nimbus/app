@@ -12,10 +12,10 @@ class UpdateInfo():
     あるチームがポケモンを捕まえたり、
     そのポケモンを削除しようとするときに使う元オブジェクト
     """
-    def __init__(self, pokemon, team):
+    def __init__(self, pokemon, team, mode):
         self.pokemon = pokemon
         self.team = team
-        self.time = 0
+        self.mode = mode
 
 
 class MainViewInfo():

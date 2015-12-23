@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
   <head>
     <meta charset="UTF-8">
@@ -228,15 +228,14 @@
       <option value="ピクシーズ">ピクシーズ</option>
       <option value="ゲンガーズ">ゲンガーズ</option>
     </select>
+    <input type="radio" name="mode" value="register" id="mode" checked />登録
+    <input type="radio" name="mode" value="delete" />削除
+      
     <input type="submit" value="送信" id="submit" />
   </form>
   
     <!-- この書き方はjinja2特有の書き方で、if文などを書けます -->
-    {% if getPokemon %}
-      今入力したのは{{ getPokemon }}で、捕まえたチームは{{ getTeam }}です。
-    {% else %}
       {{ message }}
-    {% endif %}
 
   <a href=../>メインページへ戻る</a>
   </body>

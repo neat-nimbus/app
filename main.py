@@ -23,6 +23,8 @@ import model.registerModel
 import model.showModel
 import model.initModel
 import model.showDetailModel
+import model.sortDetailModel
+import model.deletePokemonModel
 #import view.pokemonView
 import view.mainView
 import view.adminView
@@ -30,6 +32,8 @@ import view.detailView
 import view.registerView
 import dataObject
 from google.appengine.ext import ndb
+from google.appengine.api import memcache
+
 
 ### HTML
 JINJA_ENVIRONMENT = jinja2.Environment(
@@ -71,7 +75,7 @@ class RegisterHandler(BaseHandler):
         mainViewInfo = dataObject.MainViewInfo()
         showModel = model.showModel.ShowModel(mainViewInfo)
         registerViewInfo = showModel.show()
-        
+       
         # 処理した値をビューに渡します
         registerView = view.registerView.InitView(registerViewInfo)
         values = registerView.getValues()
@@ -83,19 +87,23 @@ class RegisterHandler(BaseHandler):
         
     def post(self):
         # クライアント側から値を取り、オブジェクトにセットします
-        updateInfo = dataObject.UpdateInfo(pokemon=self.request.get('pokemon'), team=self.request.get('team'))
+        updateInfo = dataObject.UpdateInfo(pokemon=self.request.get('pokemon'), team=self.request.get('team'), mode=self.request.get('mode'))
         
         # モデルで値を処理します
-        registerModel = model.registerModel.RegisterModel(updateInfo)
-        registerFlag = registerModel.register()
+        if updateInfo.mode == "register":
+            registerModel = model.registerModel.RegisterModel(updateInfo)
+            flag = registerModel.register()
+        elif updateInfo.mode == "delete":
+            deletePokemonModel = model.deletePokemonModel.DeletePokemonModel(updateInfo)
+            flag = deletePokemonModel.delete()
         
         # 処理した値をビューに渡します
-        if registerFlag:
+        if flag:
             pokemonView = view.registerView.RegisterView(updateInfo)
-            values = pokemonView.getValues()
+            values = pokemonView.getValues(updateInfo.mode)
         else:
             errorView = view.registerView.ErrorView()
-            values = errorView.getValues()
+            values = errorView.getValues(updateInfo.mode)
         
         # ビューで作られた値をhtmlにセットします
         ### self.render('xxxx.html', values)の形式を守って書きます
@@ -185,6 +193,7 @@ class DetailHandler(BaseHandler):
         # モデルで値を処理します
         showDetailModel = model.showDetailModel.ShowDetailModel()
         detailViewInfo = showDetailModel.show()
+        memcache.set(key='detailViewInfo', value=detailViewInfo, time=600)
         
         # 処理した値をビューに渡します
         detailView = view.detailView.DetailView(detailViewInfo)
@@ -192,7 +201,30 @@ class DetailHandler(BaseHandler):
         
         # ビューで作られた値をhtmlにセットします
         ### self.render('xxxx.html', values)の形式を守って書きます
-        self.render('detail.html', values)        
+        self.render('detail.html', values)
+
+    
+    def post(self):
+        # クライアント側から値を取り、オブジェクトにセットします
+        sortMode = self.request.get('sortMode')
+
+        # モデルで値を処理します
+        detailViewInfo = memcache.get('detailViewInfo')
+        if detailViewInfo == None:
+            showDetailModel = model.showDetailModel.ShowDetailModel()
+            detailViewInfo = showDetailModel.show()
+            memcache.set(key='detailViewInfo', value=detailViewInfo, time=600)
+
+        sortDetailModel = model.sortDetailModel.SortDetailModel()
+        detailViewInfo = sortDetailModel.sortByTime(detailViewInfo, sortMode)
+        
+        # 処理した値をビューに渡します
+        detailView = view.detailView.DetailView(detailViewInfo)
+        values = detailView.getValues()
+        
+        # ビューで作られた値をhtmlにセットします
+        ### self.render('xxxx.html', values)の形式を守って書きます
+        self.render('detail.html', values)
 
 
 class RuleHandler(BaseHandler):

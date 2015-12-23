@@ -49,7 +49,23 @@ def increment(updateInfo):
     else:
         logging.error(u"チーム名が不正で、DBから正しく取得できません")
         return False
-        
+
+
+def decrement(updateInfo):
+    """
+    変数にはupdateInfoオブジェクトをとる
+    返却型はBooleanで成功はTrue、失敗はFalse
+    """
+    key = ndb.Key('Counter', updateInfo.team)
+    dao = key.get()
+    if dao != None:
+        dao.number = dao.number-1
+        dao.put()
+        return True
+    else:
+        logging.error(u"チーム名が不正で、DBから正しく取得できません")
+        return False
+
 
 def getNumber(mainViewInfo):
     """

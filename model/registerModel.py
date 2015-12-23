@@ -45,7 +45,6 @@ class RegisterModel():
         """
         if (self.updateInfo.team == u'ピクシーズ' or self.updateInfo.team == u'ゲンガーズ'):
             self.updateInfo.time = get_time()
-            logging.info(self.updateInfo.time)
             
             flag = Dao.pokemonListDao.register(self.updateInfo)
             if flag:

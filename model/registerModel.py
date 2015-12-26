@@ -20,15 +20,20 @@ def get_time():
     deltaDateTime = nowDateTime - startDateTime
     seconds = int(deltaDateTime.total_seconds())
     
-    START = [0, 7200, 16200, 23100, 30000, 36900, 45900, 52800]
-    END = [6300, 13500, 22500, 29400, 36300, 43200, 52200, 59100]
-    DELTA = [0, 900, 3600, 4200, 4800, 5400, 8100, 8700, 9300, 9900]
+    START = [0, 6900, 16200, 23100, 30000, 36900, 46200, 53100]
+    END = [6300, 13200, 22500, 29400, 36300, 43200, 52500, 59400]
+    DELTA = [0, 600, 3600, 4200, 4800, 5400, 8400, 9000, 9600, 10200]
     
     START.append(seconds)
+    END.append(seconds)
     START.sort()
+    END.sort()
     i = START.index(seconds)-1
-    seconds = seconds - DELTA[i]
-    
+    j = END.index(seconds)
+    if i == j:
+        seconds = seconds - DELTA[i]
+    else:
+        seconds = END[i] - DELTA[i]    
     return seconds
 
 

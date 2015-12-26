@@ -14,13 +14,13 @@ class MainView():
 
     def getValues(self):
         """
-        時間(秒)をHH:MM:SSに変換して表示する
+        時間(秒)をHH:MMに変換して表示する
         """
         for datum in self.pokemonList:
             if datum.clefableFlag:
-                datum.clefableStrTime = common.toHms(datum.clefableTime)
+                datum.clefableStrTime = common.toHm(datum.clefableTime)
             if datum.gengarFlag:
-                datum.gengarStrTime = common.toHms(datum.gengarTime)
+                datum.gengarStrTime = common.toHm(datum.gengarTime)
 
         return {'clefableNumber':self.clefableNumber
                ,'gengarNumber':self.gengarNumber

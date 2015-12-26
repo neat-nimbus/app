@@ -114,10 +114,6 @@ def delete(updateInfo):
         logging.error(u"ポケモン名がブランクです")
 
 
-
-
-
-
 def getAllSortedByNormalOrder():
     """
     変数はとらない

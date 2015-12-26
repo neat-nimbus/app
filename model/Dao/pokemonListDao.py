@@ -128,6 +128,20 @@ def getAllSortedByNormalOrder():
     return PokemonList.query().order(PokemonList.normalOrder).fetch()
 
 
+def getSortedByTime(number, team):
+    """
+    変数はとってくるデータの数とチーム名
+    返却型はPokemonListのリスト型
+    """
+    if team == u'ピクシーズ':
+        return PokemonList.query().order(-PokemonList.clefableTime).fetch(number)
+    elif team == u'ゲンガーズ':
+        return PokemonList.query().order(-PokemonList.gengarTime).fetch(number)
+    else:
+        logging.fatal(u'チーム名が不正です。')
+        return None
+
+
 def getSortedByRecentGet(number):
     """
     変数はとってくるデータの数

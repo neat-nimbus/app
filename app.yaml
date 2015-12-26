@@ -13,6 +13,10 @@ handlers:
   static_files: css/\1
   upload: css/(.*)
 
+- url: /pdf/(.*)
+  static_files: pdf/\1
+  upload: pdf/(.*)
+
 - url: .*
   script: main.app
 

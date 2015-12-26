@@ -1,0 +1,60 @@
+table{
+border-collapse: collapse;
+}
+
+tr{
+text-align: center;
+color: #333
+}
+
+th{
+padding: 3px;
+border: 1px solid #b9b9b9;
+}
+
+td{
+padding: 0px;
+border: 1px solid #b9b9b9;
+}
+
+.clefable{
+background-color: #FFE0E5;
+}
+
+.gengar{
+background-color: #C9B8ED;
+}
+
+.niconico{
+background-color: #E6E6E6;
+}
+
+
+th.clefable{
+background-color: #FFC0CB;
+}
+
+th.gengar{
+background-color: #9370DB;
+}
+
+th.niconico{
+background-color: #CCCCCC;
+}
+
+.number{
+font-size: 125%;
+}
+
+table.nowNumber{
+width: 50%;
+}
+
+table.update{
+width: 50%;
+}
+
+table.detail{
+width: 60%;
+}
+

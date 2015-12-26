@@ -1,49 +1,55 @@
 <html>
-  <head>
-    <title>
-        ポケモン150匹企画リターンズ
-    </title>
-  </head>
-  <body>
-    <div>ポケモン言えるかな?</div>
+    <head>
+        <title>ポケモン150匹企画</title>
+        <link rel="stylesheet" type="text/css" href="./css/common.css">
+    </head>
     
-  <form action="/register", method="GET">
-    <input type="submit", value="登録ページへ遷移する">
-  </form>
-    <div>
-        {{ clefableNumber }}：ピクシーズ
-    </div>
-    <div>
-        {{ gengarNumber }}：ゲンガーズ
-    </div>
+    <body>
+    <h2>トップページ</h2>
     
-    <div>
-    最近20匹の状況
-    </div>
-    <div>
-    <table>
+    <div>ポケモン150匹企画専用の公式Webサイトです。え、こんな簡素なの？　そうです…。Twitterでは「#150匹企画」を付けてつぶやいてください。</div>
+
+    <div>捕獲の詳細が分かる<a href=/detail>詳細ページへ</a>／ルールと歴史が分かる<a href=/rule>ルールページへ</a></div>
+    
+    <h3>現在の進捗と直近5匹の捕獲状況</h3>
+    
+    <table class="nowNumber">
         <tr>
-            <th>チーム</th>
-            <th>ポケモン</th>
-            <th>捕獲時間</th>
-        </tr>        
-        {% for pokemon in pokemonList %}
+            <th class="clefable" colspan="2">ピクシーズ</th>
+            <th class="gengar" colspan="2">ゲンガーズ</th>
+        </tr>
         <tr>
-        {% if pokemon.clefableViewFlag %}
-            <td>ピクシーズ</td>
-            <td>{{pokemon.pokemon}}</td>
-            <td>{{pokemon.clefableStrTime}}</td>
-        {% elif pokemon.gengarViewFlag %}
-            <td>ゲンガーズ</td>
-            <td>{{pokemon.pokemon}}</td>
-            <td>{{pokemon.gengarStrTime}}</td>
-        {% endif %}
+            <td class="clefable" colspan="2"><span class="number">{{ clefableNumber }}</span>匹 / 150匹</td>
+            <td class="gengar" colspan="2"><span class="number">{{ gengarNumber }}</span>匹 / 150匹</td>
+        </tr>
+        {% for i in range(5) %}
+        <tr>
+            {% if clefablePokemonList[i].clefableFlag %}
+                <td class="clefable">{{ clefablePokemonList[i].pokemon }}</td>
+                <td class="clefable">{{ clefablePokemonList[i].clefableStrTime }}</td>
+            {% else %}
+                <td></td>
+                <td></td>
+            {% endif %}
+            {% if gengarPokemonList[i].gengarFlag %}
+                <td class="gengar">{{ gengarPokemonList[i].pokemon }}</td>
+                <td class="gengar">{{ gengarPokemonList[i].gengarStrTime }}</td>
+            {% else %}
+                <td></td>
+                <td></td>
+            {% endif %}
         </tr>
         {% endfor %}
     </table>
-    </div>
-  <div>
-  <a href=/detail>詳細ページへ</a>
-  </div>
-  </body>
+    
+    <h3>ustream配信</h3>
+
+    <iframe width="480" height="270" src="http://www.ustream.tv/embed/21698374?html5ui" allowfullscreen webkitallowfullscreen scrolling="no" frameborder="0" style="border: 0 none transparent;"></iframe>
+    
+    <form action="/register", method="GET">
+        <input type="submit", value="登録ページへ遷移する">
+    </form>
+    
+    <div>捕獲の詳細が分かる<a href=/detail>詳細ページへ</a>／ルールと歴史が分かる<a href=/rule>ルールページへ</a></div>
+    </body>
 </html>

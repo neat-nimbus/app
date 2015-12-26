@@ -16,5 +16,6 @@ class ShowModel:
         変数を取らず、mainViewInfoオブジェクトを返します
         """
         self.mainViewInfo = Dao.counterDao.getNumber(self.mainViewInfo)
-        self.mainViewInfo.pokemonList = Dao.pokemonListDao.getSortedByRecentGet(20)
+        self.mainViewInfo.clefablePokemonList = Dao.pokemonListDao.getSortedByTime(5, u'ピクシーズ')
+        self.mainViewInfo.gengarPokemonList = Dao.pokemonListDao.getSortedByTime(5, u'ゲンガーズ')
         return self.mainViewInfo

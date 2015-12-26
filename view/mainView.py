@@ -10,18 +10,20 @@ class MainView():
     def __init__(self, mainViewInfo):
         self.clefableNumber = mainViewInfo.clefableNumber
         self.gengarNumber = mainViewInfo.gengarNumber
-        self.pokemonList = mainViewInfo.pokemonList
+        self.clefablePokemonList = mainViewInfo.clefablePokemonList
+        self.gengarPokemonList = mainViewInfo.gengarPokemonList
 
     def getValues(self):
         """
         時間(秒)をHH:MMに変換して表示する
         """
-        for datum in self.pokemonList:
-            if datum.clefableFlag:
-                datum.clefableStrTime = common.toHm(datum.clefableTime)
-            if datum.gengarFlag:
-                datum.gengarStrTime = common.toHm(datum.gengarTime)
+        for c, g in zip(self.clefablePokemonList, self.gengarPokemonList):
+            if c.clefableFlag:
+                c.clefableStrTime = common.toHm(c.clefableTime)
+            if g.gengarFlag:
+                g.gengarStrTime = common.toHm(g.gengarTime)
 
         return {'clefableNumber':self.clefableNumber
                ,'gengarNumber':self.gengarNumber
-               ,'pokemonList':self.pokemonList}
+               ,'clefablePokemonList':self.clefablePokemonList
+               ,'gengarPokemonList':self.gengarPokemonList}

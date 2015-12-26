@@ -2,11 +2,12 @@
   <head>
     <title>
         ポケモン150匹企画
-    </title>    
+    </title>
+    <link rel="stylesheet" type="text/css" href="./css/common.css">
   </head>
   <body>
-    <div>ポケモン言えるかな?</div>
-    <div><a href=../>メインメニューへ戻る</a></div>
+    <h2>詳細ページ</h2>
+    <div><a href=../>トップページへ戻る</a></div>
     <div>
         <form action="/detail" method="POST">
             <select name="sortMode">
@@ -17,36 +18,47 @@
             <input type="submit" value="並べ替え"/>
         </form>
     
-    <table id="pokemonTable">
+    <table id="pokemonTable" class="detail">
         <tr>
             <th></th>
-            <th>ピクシーズ</th>
-            <th>ゲンガーズ</th>
-            <th>(参考)<a href="http://www.nicovideo.jp/watch/sm26187040">ニコ動記録</a></th>
+            <th class="clefable">ピクシーズ</th>
+            <th class="gengar">ゲンガーズ</th>
+            <th class="niconico">(参考)<a href="http://www.nicovideo.jp/watch/sm26187040">ニコ動記録</a></th>
         </tr>
         {% for datum in detailViewInfo %}
         <tr>
             <td>{{ datum.pokemon }}</td>
-            <td>
             {% if datum.clefableFlag %}
+                <td class="clefable">            
                 {{ datum.clefableStrTime }}
+                </td>
+            {% else %}
+                <td>
+                </td>
             {% endif %}
-            </td>
-            <td>
+
             {% if datum.gengarFlag %}
+                <td class="gengar">            
                 {{ datum.gengarStrTime }}
+                </td>
+            {% else %}
+                <td>
+                </td>
             {% endif %}
-            </td>
-            <td>
+
             {% if datum.nicoFlag %}
+                <td class="niconico">            
                 {{ datum.nicoStrTime }}
+                </td>
+            {% else %}
+                <td>
+                </td>
             {% endif %}
-            </td>
         </tr>
         {% endfor %}
     </table>
   <div>
-  <a href=../>メインメニューへ戻る</a>
+  <a href=../>トップページへ戻る</a>
   </div>
   </body>
 </html>

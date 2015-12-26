@@ -1,7 +1,7 @@
 <html>
   <head>
     <title>
-        ポケモン150匹企画リターンズ
+        ポケモン150匹企画
     </title>    
   </head>
   <body>
@@ -9,11 +9,12 @@
     <div><a href=../>メインメニューへ戻る</a></div>
     <div>
         <form action="/detail" method="POST">
-            並べ替え：
             <select name="sortMode">
-                <option value="ピクシーズ">ピクシーズ</option>
-                <option value="ゲンガーズ">ゲンガーズ</option>
-            <input type="submit" />
+                <option value="ピクシーズ">ピクシーズ順</option>
+                <option value="ゲンガーズ">ゲンガーズ順（言えるかな順）</option>
+                <option value="ニコ動">ニコ動記録順</option>
+                <option value="図鑑順">通常図鑑順</option>
+            <input type="submit" value="並べ替え"/>
         </form>
     
     <table id="pokemonTable">
@@ -21,6 +22,7 @@
             <th></th>
             <th>ピクシーズ</th>
             <th>ゲンガーズ</th>
+            <th>(参考)<a href="http://www.nicovideo.jp/watch/sm26187040">ニコ動記録</a></th>
         </tr>
         {% for datum in detailViewInfo %}
         <tr>
@@ -33,6 +35,11 @@
             <td>
             {% if datum.gengarFlag %}
                 {{ datum.gengarStrTime }}
+            {% endif %}
+            </td>
+            <td>
+            {% if datum.nicoFlag %}
+                {{ datum.nicoStrTime }}
             {% endif %}
             </td>
         </tr>

@@ -20,4 +20,5 @@ class DetailView():
                 datum.clefableStrTime = common.toHm(datum.clefableTime)
             if datum.gengarFlag:
                 datum.gengarStrTime = common.toHm(datum.gengarTime)
+            datum.nicoStrTime = common.toHm(datum.nicoTime)
         return {'detailViewInfo' : self.detailViewInfo}

@@ -182,8 +182,6 @@ class AdminHandler(BaseHandler):
         ### self.render('xxxx.html', values)の形式を守って書きます
         self.render('admin.html', values)
 
-            
-            
 
 class DetailHandler(BaseHandler):
     def get(self):
@@ -216,7 +214,7 @@ class DetailHandler(BaseHandler):
             memcache.set(key='detailViewInfo', value=detailViewInfo, time=600)
 
         sortDetailModel = model.sortDetailModel.SortDetailModel()
-        detailViewInfo = sortDetailModel.sortByTime(detailViewInfo, sortMode)
+        detailViewInfo = sortDetailModel.sortBy(detailViewInfo, sortMode)
         
         # 処理した値をビューに渡します
         detailView = view.detailView.DetailView(detailViewInfo)

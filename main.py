@@ -242,12 +242,31 @@ class RuleHandler(BaseHandler):
         self.render('rule.html', values)        
 
 
+class GengarsHandler(BaseHandler):
+    def get(self):
+        # クライアント側から値を取り、オブジェクトにセットします
+        ### 初期画面なので何も値を取ってきません
+        
+        # モデルで値を処理します
+        ### 何もしません
+        
+        # 処理した値をビューに渡します
+        ### 何もしません
+        values = {}
+                        
+        # ビューで作られた値をhtmlにセットします
+        ### self.render('xxxx.html', values)の形式を守って書きます
+        self.render('gengars.html', values)        
+
+
+
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
-    ('/register', RegisterHandler),
+    ('/neat-nimbus_db97531', RegisterHandler),
     ('/admin', AdminHandler),
     ('/detail', DetailHandler),
-    ('/rule', RuleHandler)
+    ('/rule', RuleHandler),
+    ('/gengars', GengarsHandler)
 ], debug=True)
 
-INITPASS = 'neat-nimbus'
+INITPASS = 'v26b8Wh8j4'

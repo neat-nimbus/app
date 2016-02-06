@@ -1,4 +1,4 @@
-application: poke150returnstest01
+application: poke150returns
 version: 1
 runtime: python27
 api_version: 1
@@ -16,6 +16,10 @@ handlers:
 - url: /pdf/(.*)
   static_files: pdf/\1
   upload: pdf/(.*)
+
+- url: /xlsx/(.*)
+  static_files: xlsx/\1
+  upload: xlsx/(.*)
 
 - url: .*
   script: main.app
